@@ -31,7 +31,7 @@ public class CustomerDaoTest {
         }
         List<Invoice> invoiceList = invoiceDao.getAllInvoices();
         for (Invoice invoice : invoiceList) {
-            invoiceDao.deleteInvoice(invoice.getInvoiceId());
+            invoiceDao.deleteInvoice(invoice.getId());
         }
         List<Item> itemList = itemDao.getAllItems();
         for (Item item : itemList) {
@@ -45,7 +45,6 @@ public class CustomerDaoTest {
 
     @Test
     public void shouldAddCustomer() {
-
         Customer customer = new Customer();
         customer.setPhone("555-5555");
         customer.setCompany("Cognizant");
@@ -77,8 +76,6 @@ public class CustomerDaoTest {
         Customer customer1 = customerDao.getACustomer(customer.getId());
 
         assertEquals(customer,customer1);
-
-
     }
 
     @Test

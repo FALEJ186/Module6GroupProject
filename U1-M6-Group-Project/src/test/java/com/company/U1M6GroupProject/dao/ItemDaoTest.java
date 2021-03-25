@@ -35,7 +35,7 @@ public class ItemDaoTest {
         }
         List<Invoice> invoiceList = invoiceDao.getAllInvoices();
         for (Invoice invoice : invoiceList) {
-            invoiceDao.deleteInvoice(invoice.getInvoiceId());
+            invoiceDao.deleteInvoice(invoice.getId());
         }
         List<Item> itemList = itemDao.getAllItems();
         for (Item item : itemList) {

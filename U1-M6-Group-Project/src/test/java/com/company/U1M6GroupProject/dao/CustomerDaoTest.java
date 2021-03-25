@@ -57,7 +57,6 @@ public class CustomerDaoTest {
 
         Customer customer1 = customerDao.getACustomer(customer.getId());
 
-
         assertEquals(customer,customer1);
 
 
@@ -93,11 +92,11 @@ public class CustomerDaoTest {
         customer.setFirstName("Jones");
 
         Customer customer2 = new Customer();
-        customer.setPhone("444-5555");
-        customer.setCompany("Google");
-        customer.setEmail("123@gmail.com");
-        customer.setFirstName("Bobby");
-        customer.setFirstName("Smith");
+        customer2.setPhone("444-5555");
+        customer2.setCompany("Google");
+        customer2.setEmail("123@gmail.com");
+        customer2.setFirstName("Bobby");
+        customer2.setFirstName("Smith");
 
         customerDao.addACustomer(customer);
         customerDao.addACustomer(customer2);
@@ -143,11 +142,11 @@ public class CustomerDaoTest {
         customer.setFirstName("Jones");
 
         Customer customer2 = new Customer();
-        customer.setPhone("444-5555");
-        customer.setCompany("Google");
-        customer.setEmail("123@gmail.com");
-        customer.setFirstName("Bobby");
-        customer.setFirstName("Smith");
+        customer2.setPhone("444-5555");
+        customer2.setCompany("Google");
+        customer2.setEmail("123@gmail.com");
+        customer2.setFirstName("Bobby");
+        customer2.setFirstName("Smith");
 
         customer = customerDao.addACustomer(customer);
         customer2 = customerDao.addACustomer(customer2);

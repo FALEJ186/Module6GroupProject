@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class InvoiceItemDaoTest {
@@ -77,6 +79,9 @@ public class InvoiceItemDaoTest {
         invoiceItem.setQuantity(4);
         invoiceItem.setUnitRate(BigDecimal.valueOf(30.00));
         invoiceItem.setDiscount(BigDecimal.valueOf(0.00));
+        invoiceItem = invoiceItemDao.addInvoiceItem(invoiceItem);
+
+        assertEquals(invoiceItem, invoiceItemDao.getInvoiceItem(invoiceItem.getId()));
     }
 
     @Test

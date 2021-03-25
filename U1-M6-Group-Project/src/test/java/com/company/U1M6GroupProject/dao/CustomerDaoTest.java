@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.List;
 
 import static org.junit.Assert.*;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class CustomerDaoTest {
@@ -55,7 +56,6 @@ public class CustomerDaoTest {
         customer.setEmail("abc@gmail.com");
         customer.setFirstName("Bob");
         customer.setLastName("Jones");
-
         customer = customerDao.addACustomer(customer);
 
         Customer customer1 = customerDao.getACustomer(customer.getId());

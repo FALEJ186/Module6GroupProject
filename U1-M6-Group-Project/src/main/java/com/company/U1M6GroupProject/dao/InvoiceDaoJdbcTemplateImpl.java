@@ -53,7 +53,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
 
     @Override
     public void updateInvoice(Invoice invoice) {
-        jdbcTemplate.update(INSERT_INVOICE_SQL,
+        jdbcTemplate.update(UPDATE_INVOICE_SQL,
                 invoice.getInvoiceId(),
                 invoice.getCustomerId(),
                 invoice.getOrderDate(),

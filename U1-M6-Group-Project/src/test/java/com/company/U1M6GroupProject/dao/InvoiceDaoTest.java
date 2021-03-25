@@ -60,8 +60,7 @@ public class InvoiceDaoTest {
         customer = customerDao.addACustomer(customer);
 
         Invoice invoice1 = new Invoice();
-        invoice1.setId(1);
-        invoice1.setCustomerId(1);
+        invoice1.setCustomerId(customer.getId());
         invoice1.setOrderDate(LocalDate.of(2018,3,16));
         invoice1.setPickupDate(LocalDate.of(2018,4,16));
         invoice1.setReturnDate(LocalDate.of(2018,8, 17));
@@ -81,8 +80,7 @@ public class InvoiceDaoTest {
         customer = customerDao.addACustomer(customer);
 
         Invoice invoice1 = new Invoice();
-        invoice1.setId(1);
-        invoice1.setCustomerId(1);
+        invoice1.setCustomerId(customer.getId());
         invoice1.setOrderDate(LocalDate.of(2018,3,16));
         invoice1.setPickupDate(LocalDate.of(2018,4,16));
         invoice1.setReturnDate(LocalDate.of(2018,8, 17));

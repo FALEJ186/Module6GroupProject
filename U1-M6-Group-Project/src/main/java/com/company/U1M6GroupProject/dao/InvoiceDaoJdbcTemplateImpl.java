@@ -26,7 +26,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     private static final String SELECT_ALL_INVOICES_SQL =
             "select * from invoice";
     private static final String UPDATE_INVOICE_SQL =
-            "update book set invoice_id = ?, customer_id = ?, order_date = ?, pickup_date = ?, return_date = ? where late_fee = ?";
+            "update invoice set invoice_id = ?, customer_id = ?, order_date = ?, pickup_date = ?, return_date = ? where late_fee = ?";
     private static final String SELECT_INVOICE_SQL =
             "select * from invoice where invoice_id = ? ";
 

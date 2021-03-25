@@ -32,9 +32,9 @@ public class ItemDaoTest {
         for (InvoiceItem invoiceItem : invoiceItemsList) {
             invoiceItemDao.deleteInvoiceItem(invoiceItem.getId());
         }
-        List<Invoice> invoiceList = invoiceDao.();
-        for (Item item : itemList) {
-            itemDao.deleteItem(item.getId());
+        List<Invoice> invoiceList = invoiceDao.getAllInvoices();
+        for (Invoice invoice : invoiceList) {
+            invoiceDao.deleteInvoice(invoice.getInvoiceId());
         }
         List<Item> itemList = itemDao.getAllItems();
         for (Item item : itemList) {
@@ -44,7 +44,6 @@ public class ItemDaoTest {
         for (Customer customer : customerList) {
             customerDao.deleteACustomer(customer.getId());
         }
-
     }
 
     @Test

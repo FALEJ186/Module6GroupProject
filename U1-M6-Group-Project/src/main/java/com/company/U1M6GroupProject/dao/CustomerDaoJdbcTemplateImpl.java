@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class CustomerDaoJdbcTemplate implements CustomerDao{
+public class CustomerDaoJdbcTemplateImpl implements CustomerDao{
 
     private JdbcTemplate jdbcTemplate;
 
@@ -31,7 +31,7 @@ public class CustomerDaoJdbcTemplate implements CustomerDao{
             "delete from customer where customer_id = ?";
 
     @Autowired
-    public CustomerDaoJdbcTemplate(JdbcTemplate jdbcTemplate) {
+    public CustomerDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

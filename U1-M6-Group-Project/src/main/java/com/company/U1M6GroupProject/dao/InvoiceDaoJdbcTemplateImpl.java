@@ -22,6 +22,10 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
             "delete from invoice where Id = ?";
     private static final String SELECT_INVOICE_BY_CUSTOMER_SQL =
             "select * from invoice where customerId = ?";
+    private static final String SELECT_ALL_INVOICES_SQL =
+            "select * from invoice";
+    private static final String UPDATE_INVOICE_SQL =
+            "update book set invoiceId = ?, customerId = ?, orderDate = ?, pickupDate = ?, returnDate = ? where lateFees = ?";
 
     @Autowired
     public InvoiceDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
@@ -48,13 +52,29 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     }
 
     @Override
+    public void updateInvoice(Invoice invoice) {
+        jdbcTemplate.update(INSERT_INVOICE_SQL,
+                invoice.getInvoiceId(),
+                invoice.getCustomerId(),
+                invoice.getOrderDate(),
+                invoice.getPickupDate(),
+                invoice.getReturnDate(),
+                invoice.getLateFee());
+    }
+
+    @Override
     public void deleteInvoice(int id) {
         jdbcTemplate.update(DELETE_INVOICE_SQL, id);
     }
 
     @Override
-    public List<Invoice> FindInvoiceByCustomer(String customer) {
+    public List<Invoice> findInvoiceByCustomer(String customer) {
         return jdbcTemplate.query(SELECT_INVOICE_BY_CUSTOMER_SQL, this:: mapRowToInvoice, customer);
+    }
+
+    @Override
+    public List<Invoice> getAllInvoices() {
+        return jdbcTemplate.query(SELECT_ALL_INVOICES_SQL, this::mapRowToInvoice);
     }
 
     private Invoice mapRowToInvoice(ResultSet resultSet, int rowNumber) throws SQLException {

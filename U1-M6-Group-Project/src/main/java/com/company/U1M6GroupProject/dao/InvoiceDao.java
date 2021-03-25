@@ -12,7 +12,7 @@ public interface InvoiceDao {
 
     void deleteInvoice(int id);
 
-    List<Invoice> findInvoiceByCustomer(String customer);
+    List<Invoice> findInvoiceByCustomerId(int customerId);
 
     List<Invoice> getAllInvoices();
 

@@ -98,7 +98,6 @@ public class InvoiceDaoTest {
 
     @Test
     public void deleteInvoice() {
-
         Customer customer = new Customer();
         customer.setFirstName("Test");
         customer.setLastName("Check");
@@ -127,5 +126,22 @@ public class InvoiceDaoTest {
 
     @Test
     public void findInvoiceByCustomer() {
+        Customer customer = new Customer();
+        customer.setFirstName("Test");
+        customer.setLastName("Check");
+        customer.setEmail("check@test.com");
+        customer.setCompany("Tesla");
+        customer.setPhone("000-000-0000");
+        customer = customerDao.addACustomer(customer);
+
+        Invoice invoice1 = new Invoice();
+        invoice1.setCustomerId(customer.getId());
+        invoice1.setOrderDate(LocalDate.of(2018,3,16));
+        invoice1.setPickupDate(LocalDate.of(2018,4,16));
+        invoice1.setReturnDate(LocalDate.of(2018,8, 17));
+        invoice1.setLateFee(new BigDecimal("19.99"));
+        invoice1 = invoiceDao.addInvoice(invoice1);
+
+        assertEquals(invoice1, invoiceDao.findInvoiceByCustomerId(invoice1.getCustomerId()).get(0));
     }
 }

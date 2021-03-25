@@ -20,9 +20,9 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
             "insert into invoice (invoice_id, customer_id, order_date, pickup_date, return_date, late_fee)" +
                     "  values (?, ?, ?, ?, ?, ?)";
     private static final String DELETE_INVOICE_SQL =
-            "delete from invoice where customer_id = ?";
+            "delete from invoice where invoice_id = ?";
     private static final String SELECT_INVOICE_BY_CUSTOMER_SQL =
-            "select * from invoice where customer_id = ?";
+            "select * from invoice where invoice_id = ?";
     private static final String SELECT_ALL_INVOICES_SQL =
             "select * from invoice";
     private static final String UPDATE_INVOICE_SQL =

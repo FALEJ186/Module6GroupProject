@@ -6,12 +6,16 @@ import com.company.U1M6GroupProject.model.InvoiceItem;
 import com.company.U1M6GroupProject.model.Item;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
 public class CustomerDaoTest {
 
     @Autowired
@@ -51,7 +55,7 @@ public class CustomerDaoTest {
         customer.setCompany("Cognizant");
         customer.setEmail("abc@gmail.com");
         customer.setFirstName("Bob");
-        customer.setFirstName("Jones");
+        customer.setLastName("Jones");
 
         customer = customerDao.addACustomer(customer);
 
@@ -70,7 +74,7 @@ public class CustomerDaoTest {
         customer.setCompany("Cognizant");
         customer.setEmail("abc@gmail.com");
         customer.setFirstName("Bob");
-        customer.setFirstName("Jones");
+        customer.setLastName("Jones");
 
         customer = customerDao.addACustomer(customer);
 
@@ -89,14 +93,14 @@ public class CustomerDaoTest {
         customer.setCompany("Cognizant");
         customer.setEmail("abc@gmail.com");
         customer.setFirstName("Bob");
-        customer.setFirstName("Jones");
+        customer.setLastName("Jones");
 
         Customer customer2 = new Customer();
         customer2.setPhone("444-5555");
         customer2.setCompany("Google");
         customer2.setEmail("123@gmail.com");
         customer2.setFirstName("Bobby");
-        customer2.setFirstName("Smith");
+        customer2.setLastName("Smith");
 
         customerDao.addACustomer(customer);
         customerDao.addACustomer(customer2);
@@ -115,7 +119,7 @@ public class CustomerDaoTest {
         customer.setCompany("Cognizant");
         customer.setEmail("abc@gmail.com");
         customer.setFirstName("Bob");
-        customer.setFirstName("Jones");
+        customer.setLastName("Jones");
 
         customer = customerDao.addACustomer(customer);
 
@@ -123,7 +127,7 @@ public class CustomerDaoTest {
         customer.setCompany("new");
         customer.setEmail("other");
         customer.setFirstName("joe");
-        customer.setFirstName("smith");
+        customer.setLastName("smith");
 
         customerDao.updateCustomer(customer);
         Customer customer2 = customerDao.getACustomer(customer.getId());
@@ -139,14 +143,14 @@ public class CustomerDaoTest {
         customer.setCompany("Cognizant");
         customer.setEmail("abc@gmail.com");
         customer.setFirstName("Bob");
-        customer.setFirstName("Jones");
+        customer.setLastName("Jones");
 
         Customer customer2 = new Customer();
         customer2.setPhone("444-5555");
         customer2.setCompany("Google");
         customer2.setEmail("123@gmail.com");
         customer2.setFirstName("Bobby");
-        customer2.setFirstName("Smith");
+        customer2.setLastName("Smith");
 
         customer = customerDao.addACustomer(customer);
         customer2 = customerDao.addACustomer(customer2);

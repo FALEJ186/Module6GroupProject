@@ -35,9 +35,9 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
 
 
     @Override
-    public Invoice createInvoice(Invoice invoice) {
+    public Invoice addInvoice(Invoice invoice) {
         jdbcTemplate.update(INSERT_INVOICE_SQL,
-                invoice.getInvoiceId(),
+                invoice.getId(),
                 invoice.getCustomerId(),
                 invoice.getOrderDate(),
                 invoice.getPickupDate(),
@@ -46,7 +46,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
 
         int id = jdbcTemplate.queryForObject("select_invoice_id()", Integer.class);
 
-        invoice.setInvoiceId(id);
+        invoice.setId(id);
 
         return invoice;
     }
@@ -54,7 +54,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     @Override
     public void updateInvoice(Invoice invoice) {
         jdbcTemplate.update(UPDATE_INVOICE_SQL,
-                invoice.getInvoiceId(),
+                invoice.getId(),
                 invoice.getCustomerId(),
                 invoice.getOrderDate(),
                 invoice.getPickupDate(),
@@ -79,7 +79,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
 
     private Invoice mapRowToInvoice(ResultSet resultSet, int rowNumber) throws SQLException {
         Invoice invoice1 = new Invoice();
-        invoice1.setInvoiceId(resultSet.getInt("invoiceId"));
+        invoice1.setId(resultSet.getInt("invoiceId"));
         invoice1.setCustomerId(resultSet.getInt("isbn"));
         invoice1.setOrderDate(resultSet.getDate("orderDate").toLocalDate()); //why is this not working?
         invoice1.setPickupDate(resultSet.getDate("pickupDate").toLocalDate());

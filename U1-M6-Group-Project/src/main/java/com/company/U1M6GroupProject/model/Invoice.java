@@ -1,14 +1,12 @@
 package com.company.U1M6GroupProject.model;
 
-import org.apache.tomcat.jni.Local;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Invoice {
 
-    private int invoiceId;
+    private int id;
     private int customerId;
     private LocalDate orderDate;
     private LocalDate pickupDate;
@@ -18,12 +16,12 @@ public class Invoice {
     public Invoice() {
     }
 
-    public int getInvoiceId() {
-        return invoiceId;
+    public int getId() {
+        return id;
     }
 
-    public void setInvoiceId(int invoiceId) {
-        this.invoiceId = invoiceId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getCustomerId() {
@@ -71,18 +69,18 @@ public class Invoice {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Invoice invoice = (Invoice) o;
-        return invoiceId == invoice.invoiceId && customerId == invoice.customerId && Objects.equals(orderDate, invoice.orderDate) && Objects.equals(pickupDate, invoice.pickupDate) && Objects.equals(returnDate, invoice.returnDate) && Objects.equals(lateFee, invoice.lateFee);
+        return id == invoice.id && customerId == invoice.customerId && Objects.equals(orderDate, invoice.orderDate) && Objects.equals(pickupDate, invoice.pickupDate) && Objects.equals(returnDate, invoice.returnDate) && Objects.equals(lateFee, invoice.lateFee);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(invoiceId, customerId, orderDate, pickupDate, returnDate, lateFee);
+        return Objects.hash(id, customerId, orderDate, pickupDate, returnDate, lateFee);
     }
 
     @Override
     public String toString() {
         return "Invoice{" +
-                "invoiceId=" + invoiceId +
+                "invoiceId=" + id +
                 ", customerId=" + customerId +
                 ", orderDate=" + orderDate +
                 ", pickupDate=" + pickupDate +

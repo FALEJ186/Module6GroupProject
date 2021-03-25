@@ -3,6 +3,7 @@ package com.company.U1M6GroupProject.dao;
 
 import com.company.U1M6GroupProject.model.Invoice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +27,8 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
             "select * from invoice";
     private static final String UPDATE_INVOICE_SQL =
             "update book set invoiceId = ?, customerId = ?, orderDate = ?, pickupDate = ?, returnDate = ? where lateFees = ?";
+    private static final String SELECT_INVOICE_SQL =
+            "select * from invoice where id = ? ";
 
     @Autowired
     public InvoiceDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
@@ -75,6 +78,18 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     @Override
     public List<Invoice> getAllInvoices() {
         return jdbcTemplate.query(SELECT_ALL_INVOICES_SQL, this::mapRowToInvoice);
+    }
+
+    @Override
+    public Invoice getInvoice(int id) {
+        try {
+
+            return jdbcTemplate.queryForObject(SELECT_INVOICE_SQL, this::mapRowToInvoice, id);
+
+        } catch (EmptyResultDataAccessException exception) {
+            // if nothing is returned just catch the exception and return null
+            return null;
+        }
     }
 
     private Invoice mapRowToInvoice(ResultSet resultSet, int rowNumber) throws SQLException {

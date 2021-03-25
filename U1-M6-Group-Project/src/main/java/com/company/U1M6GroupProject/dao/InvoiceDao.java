@@ -15,4 +15,6 @@ public interface InvoiceDao {
     List<Invoice> findInvoiceByCustomer(String customer);
 
     List<Invoice> getAllInvoices();
+
+    Invoice getInvoice (int id);
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -34,7 +35,7 @@ public class ItemDaoTest {
         }
         List<Invoice> invoiceList = invoiceDao.getAllInvoices();
         for (Invoice invoice : invoiceList) {
-            invoiceDao.deleteInvoice(invoice.getInvoiceId());
+            invoiceDao.deleteInvoice(invoice.getId());
         }
         List<Item> itemList = itemDao.getAllItems();
         for (Item item : itemList) {
@@ -47,22 +48,79 @@ public class ItemDaoTest {
     }
 
     @Test
-    public void addItem() {
+    public void shouldAddItem() {
+        Item item = new Item();
+        item.setName("Test");
+        item.setDailyRate(BigDecimal.valueOf(19.99));
+        item.setDescription("test desc");
+
+        item = itemDao.addItem(item);
+
+        assertEquals(item, itemDao.getItem(item.getId()));
     }
 
     @Test
-    public void getItem() {
+    public void shouldGetItemById() {
+        Item item = new Item();
+        item.setName("Test");
+        item.setDailyRate(BigDecimal.valueOf(19.99));
+        item.setDescription("test desc");
+        item = itemDao.addItem(item);
+
+        Item item2 = new Item();
+        item2.setName("Test2");
+        item2.setDailyRate(BigDecimal.valueOf(39.99));
+        item2.setDescription("test desc2");
+        item2 = itemDao.addItem(item2);
+
+        assertEquals(item, itemDao.getItem(item.getId()));
+        assertEquals(item2, itemDao.getItem(item2.getId()));
     }
 
     @Test
-    public void getAllItems() {
+    public void shouldGetAllItems() {
+        Item item = new Item();
+        item.setName("Test");
+        item.setDailyRate(BigDecimal.valueOf(19.99));
+        item.setDescription("test desc");
+        item = itemDao.addItem(item);
+
+        Item item2 = new Item();
+        item2.setName("Test2");
+        item2.setDailyRate(BigDecimal.valueOf(39.99));
+        item2.setDescription("test desc2");
+        item2 = itemDao.addItem(item2);
+
+        assertEquals(2, itemDao.getAllItems().size());
     }
 
     @Test
-    public void updateItem() {
+    public void shouldUpdateItem() {
+        Item item = new Item();
+        item.setName("Test");
+        item.setDailyRate(BigDecimal.valueOf(19.99));
+        item.setDescription("test desc");
+        item = itemDao.addItem(item);
+
+        item.setName("Update Test");
+        item.setDescription("Update Description");
+        item.setDailyRate(BigDecimal.valueOf(99.99));
+
+        itemDao.updateItem(item);
+
+        assertEquals(item, itemDao.getItem(item.getId()));
     }
 
     @Test
-    public void deleteItem() {
+    public void shouldDeleteItem() {
+        Item item = new Item();
+        item.setName("Test");
+        item.setDailyRate(BigDecimal.valueOf(19.99));
+        item.setDescription("test desc");
+        item = itemDao.addItem(item);
+
+        itemDao.deleteItem(item.getId());
+
+        assertNull(itemDao.getItem(item.getId()));
     }
 }

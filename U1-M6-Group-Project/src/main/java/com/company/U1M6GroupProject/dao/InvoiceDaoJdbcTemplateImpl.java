@@ -17,18 +17,18 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     private JdbcTemplate jdbcTemplate;
 
     private static final String INSERT_INVOICE_SQL =
-            "insert into invoice (invoiceId, customerId, orderDate, pickupDate, returnDate, lateFees)" +
+            "insert into invoice (invoice_id, customer_id, order_date, pickup_date, return_date, late_fee)" +
                     "  values (?, ?, ?, ?, ?, ?)";
     private static final String DELETE_INVOICE_SQL =
-            "delete from invoice where Id = ?";
+            "delete from invoice where customer_id = ?";
     private static final String SELECT_INVOICE_BY_CUSTOMER_SQL =
-            "select * from invoice where customerId = ?";
+            "select * from invoice where customer_id = ?";
     private static final String SELECT_ALL_INVOICES_SQL =
             "select * from invoice";
     private static final String UPDATE_INVOICE_SQL =
-            "update book set invoiceId = ?, customerId = ?, orderDate = ?, pickupDate = ?, returnDate = ? where lateFees = ?";
+            "update book set invoice_id = ?, customer_id = ?, order_date = ?, pickup_date = ?, return_date = ? where late_fee = ?";
     private static final String SELECT_INVOICE_SQL =
-            "select * from invoice where id = ? ";
+            "select * from invoice where invoice_id = ? ";
 
     @Autowired
     public InvoiceDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
@@ -38,18 +38,18 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
 
 
     @Override
-    public Invoice createInvoice(Invoice invoice) {
+    public Invoice addInvoice(Invoice invoice) {
         jdbcTemplate.update(INSERT_INVOICE_SQL,
-                invoice.getInvoiceId(),
+                invoice.getId(),
                 invoice.getCustomerId(),
                 invoice.getOrderDate(),
                 invoice.getPickupDate(),
                 invoice.getReturnDate(),
                 invoice.getLateFee());
 
-        int id = jdbcTemplate.queryForObject("select_invoice_id()", Integer.class);
+        int id = jdbcTemplate.queryForObject("select LAST_INSERT_ID()", Integer.class);
 
-        invoice.setInvoiceId(id);
+        invoice.setId(id);
 
         return invoice;
     }
@@ -57,7 +57,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     @Override
     public void updateInvoice(Invoice invoice) {
         jdbcTemplate.update(UPDATE_INVOICE_SQL,
-                invoice.getInvoiceId(),
+                invoice.getId(),
                 invoice.getCustomerId(),
                 invoice.getOrderDate(),
                 invoice.getPickupDate(),
@@ -94,12 +94,12 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
 
     private Invoice mapRowToInvoice(ResultSet resultSet, int rowNumber) throws SQLException {
         Invoice invoice1 = new Invoice();
-        invoice1.setInvoiceId(resultSet.getInt("invoiceId"));
-        invoice1.setCustomerId(resultSet.getInt("isbn"));
-        invoice1.setOrderDate(resultSet.getDate("orderDate").toLocalDate()); //why is this not working?
-        invoice1.setPickupDate(resultSet.getDate("pickupDate").toLocalDate());
-        invoice1.setReturnDate(resultSet.getDate("returnDate").toLocalDate());
-        invoice1.setLateFee(resultSet.getBigDecimal("lateFee"));
+        invoice1.setId(resultSet.getInt("invoice_id"));
+        invoice1.setCustomerId(resultSet.getInt("customer_id"));
+        invoice1.setOrderDate(resultSet.getDate("order_date").toLocalDate()); //why is this not working?
+        invoice1.setPickupDate(resultSet.getDate("pickup_date").toLocalDate());
+        invoice1.setReturnDate(resultSet.getDate("return_date").toLocalDate());
+        invoice1.setLateFee(resultSet.getBigDecimal("late_fee"));
 
         return invoice1;
     }

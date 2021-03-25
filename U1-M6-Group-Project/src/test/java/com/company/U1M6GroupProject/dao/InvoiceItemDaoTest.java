@@ -15,11 +15,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class InvoiceDaoTest {
+public class InvoiceItemDaoTest {
     @Autowired
     CustomerDao customerDao;
     @Autowired
@@ -50,41 +48,7 @@ public class InvoiceDaoTest {
     }
 
     @Test
-    public void createInvoice() {
-        Invoice invoice1 = new Invoice();
-        invoice1.setId(1);
-        invoice1.setCustomerId(1);
-        invoice1.setOrderDate(LocalDate.of(2018,3,16));
-        invoice1.setPickupDate(LocalDate.of(2018,4,16));
-        invoice1.setReturnDate(LocalDate.of(2018,8, 17));
-        invoice1.setLateFee(new BigDecimal(19.99));
-
-        invoice1 = invoiceDao.addInvoice(invoice1);
-    }
-
-    @Test
-    public void updateInvoice() {
-        Invoice invoice1 = new Invoice();
-        invoice1.setId(1);
-        invoice1.setCustomerId(1);
-        invoice1.setOrderDate(LocalDate.of(2018,3,16));
-        invoice1.setPickupDate(LocalDate.of(2018,4,16));
-        invoice1.setReturnDate(LocalDate.of(2018,8, 17));
-        invoice1.setLateFee(new BigDecimal(19.99));
-
-        invoice1 = invoiceDao.addInvoice(invoice1);
-
-        invoice1.setLateFee(new BigDecimal(29.99));
-
-        invoiceDao.updateInvoice(invoice1);
-
-        Invoice invoice2 = invoiceDao.getInvoice(invoice1.getId());
-
-    }
-
-    @Test
-    public void deleteInvoice() {
-
+    public void addInvoiceItem() {
         Customer customer = new Customer();
         customer.setFirstName("Test");
         customer.setLastName("Check");
@@ -93,25 +57,41 @@ public class InvoiceDaoTest {
         customer.setPhone("000-000-0000");
         customer = customerDao.addACustomer(customer);
 
-        Invoice invoice1 = new Invoice();
-        invoice1.setCustomerId(customer.getId());
-        invoice1.setOrderDate(LocalDate.of(2018,3,16));
-        invoice1.setPickupDate(LocalDate.of(2018,4,16));
-        invoice1.setReturnDate(LocalDate.of(2018,8, 17));
-        invoice1.setLateFee(new BigDecimal(19.99));
+        Invoice invoice = new Invoice();
+        invoice.setCustomerId(customer.getId());
+        invoice.setOrderDate(LocalDate.of(2021, 3, 25));
+        invoice.setPickupDate(LocalDate.of(2021,3,26));
+        invoice.setReturnDate(LocalDate.of(2021,4,5));
+        invoice.setLateFee(BigDecimal.valueOf(100.00));
+        invoice = invoiceDao.addInvoice(invoice);
 
-        invoice1 = invoiceDao.addInvoice(invoice1);
+        Item item = new Item();
+        item.setName("Test");
+        item.setDailyRate(BigDecimal.valueOf(19.99));
+        item.setDescription("test desc");
+        item = itemDao.addItem(item);
 
-        Invoice invoice2 = invoiceDao.getInvoice(invoice1.getId());
-
-        invoiceDao.deleteInvoice(invoice1.getId());
-
-        invoice2 = invoiceDao.getInvoice(invoice1.getId());
-
-        assertNull(invoice2);
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setInvoiceId(invoice.getId());
+        invoiceItem.setItemId(item.getId());
+        invoiceItem.setQuantity(4);
+        invoiceItem.setUnitRate(BigDecimal.valueOf(30.00));
+        invoiceItem.setDiscount(BigDecimal.valueOf(0.00));
     }
 
     @Test
-    public void findInvoiceByCustomer() {
+    public void getInvoiceItem() {
+    }
+
+    @Test
+    public void getAllInvoiceItems() {
+    }
+
+    @Test
+    public void updateInvoiceItem() {
+    }
+
+    @Test
+    public void deleteInvoiceItem() {
     }
 }

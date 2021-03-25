@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface InvoiceDao {
 
-    Invoice createInvoice(Invoice invoice);
+    Invoice addInvoice(Invoice invoice);
 
     void updateInvoice (Invoice invoice);
 

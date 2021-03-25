@@ -51,6 +51,14 @@ public class InvoiceDaoTest {
 
     @Test
     public void createInvoice() {
+        Customer customer = new Customer();
+        customer.setFirstName("Test");
+        customer.setLastName("Check");
+        customer.setEmail("check@test.com");
+        customer.setCompany("Tesla");
+        customer.setPhone("000-000-0000");
+        customer = customerDao.addACustomer(customer);
+
         Invoice invoice1 = new Invoice();
         invoice1.setId(1);
         invoice1.setCustomerId(1);
@@ -64,6 +72,14 @@ public class InvoiceDaoTest {
 
     @Test
     public void updateInvoice() {
+        Customer customer = new Customer();
+        customer.setFirstName("Test");
+        customer.setLastName("Check");
+        customer.setEmail("check@test.com");
+        customer.setCompany("Tesla");
+        customer.setPhone("000-000-0000");
+        customer = customerDao.addACustomer(customer);
+
         Invoice invoice1 = new Invoice();
         invoice1.setId(1);
         invoice1.setCustomerId(1);

@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +32,8 @@ public class ServiceLayer {
         this.invoiceItemDao = invoiceItemDao;
         this.invoiceDao = invoiceDao;
     }
-    //Album API
+
+    //Invoice API
     @Transactional
     public InvoiceViewModel saveInvoice(InvoiceViewModel invoiceViewModel) {
         //create invoice from invoiceViewModel
@@ -179,6 +178,16 @@ public class ServiceLayer {
         invoiceDao.deleteInvoice(invoiceId);
     }
 
+    public List<InvoiceViewModel> findInvoiceByCustomerId(int customerId) {
+        //get original "Invoice" object first
+        List<Invoice> invoices = invoiceDao.findInvoiceByCustomerId(customerId);
+        List<InvoiceViewModel> finalList = new ArrayList<>();
+        for (Invoice i: invoices) {
+            finalList.add(buildInvoiceViewModel(i));
+        }
+        return finalList;
+    }
+
     //Customer API
     public Customer saveCustomer(Customer customer) {
         return customerDao.addACustomer(customer);
@@ -217,25 +226,6 @@ public class ServiceLayer {
         itemDao.deleteItem(itemId);
     }
 
-    //Invoice API
-    public Invoice addInvoice (Invoice invoice) {
-        return invoiceDao.addInvoice(invoice);
-    }
-    public void updateInvoice (Invoice invoice) {
-        invoiceDao.updateInvoice(invoice);
-    }
-    public void deleteInvoice (int id) {
-        invoiceDao.deleteInvoice(id);
-    }
-    public List <Invoice> findInvoiceByCustomerId (int customerId) {
-        return invoiceDao.findInvoiceByCustomerId(customerId);
-    }
-    public List <Invoice> getAllInvoices() {
-        return invoiceDao.getAllInvoices();
-    }
-    public Invoice getInvoice (int id) {
-        return invoiceDao.getInvoice(id);
-    }
 
     //InvoiceItemAPI
     public InvoiceItem saveInvoiceItem(InvoiceItem invoiceItem) {

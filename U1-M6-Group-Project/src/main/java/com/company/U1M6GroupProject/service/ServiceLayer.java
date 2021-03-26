@@ -12,6 +12,7 @@ import com.company.U1M6GroupProject.viewmodel.InvoiceItemViewModel;
 import com.company.U1M6GroupProject.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -51,14 +52,31 @@ public class ServiceLayer {
         //initializes a list of "InvoiceViewModel"
         List<InvoiceViewModel> invoiceViewModels = new ArrayList<>();
 
-        /*creates a list of "InvoiceViewModel" corresponding to original "Invoice"
-        from each "Invoice" from invoiceList*/
+        /* creates a list of "InvoiceViewModel" corresponding to original "Invoice"
+        from each "Invoice" from invoiceList */
         for (Invoice invoice:invoiceList) {
             InvoiceViewModel ivm = buildInvoiceViewModel(invoice);
             invoiceViewModels.add(ivm);
         }
 
         return invoiceViewModels;
+    }
+
+    @Transactional
+    public void updateInvoice(InvoiceViewModel viewModel) {
+    }
+
+    @Transactional
+    public void removeInvoice(int invoiceId) {
+        /* Delete all associated invoiceItems first. We only need to delete "InvoiceItem"
+        rather than "InvoiceItemViewModel" because  viewModel is built off the original "InvoiceItem" object
+        so deleting that will delete the view model */
+        List<InvoiceItem> invoiceItemList = invoiceItemDao.getInvoicesItemByInvoiceId(invoiceId);
+        invoiceItemList.stream()
+                .forEach(invoiceItem -> invoiceItemDao.deleteInvoiceItem(invoiceItem.getId()));
+
+        //Remove invoice
+        invoiceDao.deleteInvoice(invoiceId);
     }
 
     //Customer API

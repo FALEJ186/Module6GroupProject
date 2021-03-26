@@ -35,6 +35,27 @@ public class ServiceLayer {
 
     //Customer API
 
+    public Customer saveCustomer(Customer customer) {
+        return customerDao.addACustomer(customer);
+    }
+
+    public Customer findCustomer (int id) {
+        return customerDao.getACustomer(id);
+    }
+
+    public List<Customer> findAllCustomers () {
+        return customerDao.getAllCustomers();
+    }
+
+    public void updateCustomer(Customer customer) {
+        customerDao.updateCustomer(customer);
+
+    }
+
+    public void removeCustomer(int id) {
+        customerDao.deleteACustomer(id);
+    }
+
 
 
     //Item API

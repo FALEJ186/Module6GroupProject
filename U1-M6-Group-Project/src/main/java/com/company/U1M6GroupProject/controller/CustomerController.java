@@ -46,7 +46,7 @@ public class CustomerController {
 
     }
 
-    @RequestMapping (value = "/customer/{id}", method = RequestMethod.POST)
+    @RequestMapping (value = "/customer/{id}", method = RequestMethod.DELETE)
     @ResponseStatus (value = HttpStatus.OK)
     public void deleteACustomer(@PathVariable int id) {
          serviceLayer.removeCustomer(id);

@@ -13,9 +13,17 @@ public class ErrorResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     LocalDateTime timestamp;
 
+    public ErrorResponse(String errorMessage, String errorCode, int status) {
+        this.errorMessage = errorMessage;
+        this.errorCode = errorCode;
+        this.status = status;
+        timestamp = LocalDateTime.now();
+    }
+
     public ErrorResponse(String errorMessage, String errorCode) {
         this.errorMessage = errorMessage;
         this.errorCode = errorCode;
+
         timestamp = LocalDateTime.now();
     }
 

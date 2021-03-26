@@ -204,7 +204,5 @@ public class InvoiceDaoTest {
         List<Invoice> invoiceList = invoiceDao.getAllInvoices();
 
         assertEquals(invoiceList.size(), 2);
-
-
     }
 }

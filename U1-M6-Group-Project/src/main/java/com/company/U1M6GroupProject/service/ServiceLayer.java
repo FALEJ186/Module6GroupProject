@@ -102,10 +102,10 @@ public class ServiceLayer {
     }
 
     @Transactional
-    public void updateInvoice(InvoiceViewModel viewModel) {
+    public void updateInvoice(InvoiceViewModel viewModel, int invoiceId) {
         //create invoice from invoiceViewModel
         Invoice i = new Invoice();
-        i.setId(viewModel.getId());
+        i.setId(invoiceId);
         i.setCustomerId(viewModel.getCustomer().getId());
         i.setOrderDate(viewModel.getOrderDate());
         i.setPickupDate(viewModel.getPickupDate());
@@ -171,6 +171,7 @@ public class ServiceLayer {
     }
 
     //Customer API
+    @Transactional
     public Customer saveCustomer(Customer customer) {
         return customerDao.addACustomer(customer);
     }
@@ -180,6 +181,7 @@ public class ServiceLayer {
     public List<Customer> findAllCustomers () {
         return customerDao.getAllCustomers();
     }
+    @Transactional
     public void updateCustomer(Customer customer) {
         customerDao.updateCustomer(customer);
     }
@@ -188,6 +190,7 @@ public class ServiceLayer {
     }
 
     //Item API
+    @Transactional
     public Item saveItem(Item item) {
         return itemDao.addItem(item);
     }
@@ -199,7 +202,7 @@ public class ServiceLayer {
     public List<Item> findAllItems() {
         return itemDao.getAllItems();
     }
-
+    @Transactional
     public void updateItem(Item item) {
         itemDao.updateItem(item);
     }
@@ -210,20 +213,49 @@ public class ServiceLayer {
 
 
     //InvoiceItemAPI
-    public InvoiceItem saveInvoiceItem(InvoiceItem invoiceItem) {
-        return invoiceItemDao.addInvoiceItem(invoiceItem);
+    @Transactional
+    public InvoiceItemViewModel saveInvoiceItem(InvoiceItemViewModel iivm) {
+        InvoiceItem ii = new InvoiceItem();
+        ii.setInvoiceId(iivm.getInvoiceId());
+        ii.setItemId(iivm.getItem().getId());
+        ii.setQuantity(iivm.getQuantity());
+        ii.setUnitRate(iivm.getUnitRate());
+        ii.setDiscount(iivm.getDiscount());
+        ii = invoiceItemDao.addInvoiceItem(ii);
+        iivm.setId(ii.getId());
+
+        Item item = itemDao.addItem(iivm.getItem());
+
+        iivm.setItem(item);
+
+        return iivm;
     }
 
-    public InvoiceItem findInvoiceItem(int invoiceItemId) {
-        return invoiceItemDao.getInvoiceItem(invoiceItemId);
+    public InvoiceItemViewModel findInvoiceItem(int invoiceItemId) {
+        InvoiceItem invoiceItem = invoiceItemDao.getInvoiceItem(invoiceItemId);
+
+        return buildInvoiceItemViewModel(invoiceItem);
     }
 
-    public List<InvoiceItem> findAllInvoiceItems() {
-        return invoiceItemDao.getAllInvoiceItems();
+    public List<InvoiceItemViewModel> findAllInvoiceItems() {
+        List<InvoiceItemViewModel> iivmList = new ArrayList<>();
+        List<InvoiceItem> iiList = invoiceItemDao.getAllInvoiceItems();
+        for (InvoiceItem ii: iiList) {
+            InvoiceItemViewModel iivm = buildInvoiceItemViewModel(ii);
+            iivmList.add(iivm);
+        }
+        return iivmList;
     }
-
-    public void updateInvoiceItem(InvoiceItem invoiceItem) {
-        invoiceItemDao.updateInvoiceItem(invoiceItem);
+    @Transactional
+    public void updateInvoiceItem(InvoiceItemViewModel iivm, int invoiceItemId) {
+        InvoiceItem ii = new InvoiceItem();
+        ii.setId(invoiceItemId);
+        ii.setInvoiceId(iivm.getInvoiceId());
+        ii.setItemId(iivm.getItem().getId());
+        ii.setQuantity(iivm.getQuantity());
+        ii.setUnitRate(iivm.getUnitRate());
+        ii.setDiscount(iivm.getDiscount());
+        invoiceItemDao.updateInvoiceItem(ii);
     }
 
     public void removeInvoiceItem(int invoiceItemId) {

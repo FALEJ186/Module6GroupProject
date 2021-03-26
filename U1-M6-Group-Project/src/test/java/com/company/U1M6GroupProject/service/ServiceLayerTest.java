@@ -36,6 +36,39 @@ public class ServiceLayerTest {
 
     }
 
+    private void setUpInvoiceDaoMock() {
+        InvoiceDao invoiceDaoMock = mock(InvoiceDaoJdbcTemplateImpl.class);
+
+        Invoice invoice = new Invoice();
+        invoice.setId(5);
+        invoice.setCustomerId(45);
+        invoice.setLateFee(new BigDecimal("10.00"));
+        invoice.setOrderDate(LocalDate.of(2010,5,10));
+        invoice.setPickupDate(LocalDate.of(2010,6,20));
+        invoice.setReturnDate(LocalDate.of(2010,6,30));
+
+        Invoice invoice2 = new Invoice();
+
+        invoice2.setCustomerId(45);
+        invoice2.setLateFee(new BigDecimal("10.00"));
+        invoice2.setOrderDate(LocalDate.of(2010,5,10));
+        invoice2.setPickupDate(LocalDate.of(2010,6,20));
+        invoice2.setReturnDate(LocalDate.of(2010,6,30));
+
+        List<Invoice> invoiceList = new ArrayList<>();
+        invoiceList.add(invoice);
+
+        doReturn(invoiceList).when(invoiceDaoMock).getAllInvoices();
+
+        doReturn(invoice).when(invoiceDaoMock).addInvoice(invoice2);
+
+        doReturn(invoice).when(invoiceDaoMock).getInvoice(5);
+
+        this.invoiceDao = invoiceDaoMock;
+
+
+    }
+
 
     private void setUpCustomerDaoMock () {
         CustomerDao customerDaoMock = mock(CustomerDaoJdbcTemplateImpl.class);
@@ -69,38 +102,7 @@ public class ServiceLayerTest {
 
     }
 
-    private void setUpInvoiceDaoMock() {
-        InvoiceDao invoiceDaoMock = mock(InvoiceDaoJdbcTemplateImpl.class);
 
-        Invoice invoice = new Invoice();
-        invoice.setId(5);
-        invoice.setCustomerId(45);
-        invoice.setLateFee(new BigDecimal("10.00"));
-        invoice.setOrderDate(LocalDate.of(2010,5,10));
-        invoice.setPickupDate(LocalDate.of(2010,6,20));
-        invoice.setReturnDate(LocalDate.of(2010,6,30));
-
-        Invoice invoice2 = new Invoice();
-
-        invoice2.setCustomerId(45);
-        invoice2.setLateFee(new BigDecimal("10.00"));
-        invoice2.setOrderDate(LocalDate.of(2010,5,10));
-        invoice2.setPickupDate(LocalDate.of(2010,6,20));
-        invoice2.setReturnDate(LocalDate.of(2010,6,30));
-
-        List<Invoice> invoiceList = new ArrayList<>();
-        invoiceList.add(invoice);
-
-        doReturn(invoiceList).when(invoiceDaoMock).getAllInvoices();
-
-        doReturn(invoice).when(invoiceDaoMock).addInvoice(invoice2);
-
-        doReturn(invoice).when(invoiceDaoMock).getInvoice(5);
-
-        this.invoiceDao = invoiceDaoMock;
-
-
-    }
 
     private void setUpItemDaoMock() {
         ItemDao itemDaoMock = mock(ItemDaoJdbcTemplateImpl.class);

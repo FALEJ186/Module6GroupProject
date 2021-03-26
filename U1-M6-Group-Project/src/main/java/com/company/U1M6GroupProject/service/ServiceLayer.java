@@ -33,30 +33,50 @@ public class ServiceLayer {
         this.invoiceItemDao = invoiceItemDao;
         this.invoiceDao = invoiceDao;
     }
+    //Album API
+
+
+    public InvoiceViewModel findInvoice(int invoiceId) {
+        //get original "Invoice" object first
+        Invoice invoice = invoiceDao.getInvoice(invoiceId);
+
+        //creates "InvoiceViewModel" from original "Invoice"
+        return buildInvoiceViewModel(invoice);
+    }
+
+    public List<InvoiceViewModel> findAllInvoices() {
+        //gets ALL original "Invoice" objects
+        List<Invoice> invoiceList = invoiceDao.getAllInvoices();
+
+        //initializes a list of "InvoiceViewModel"
+        List<InvoiceViewModel> invoiceViewModels = new ArrayList<>();
+
+        /*creates a list of "InvoiceViewModel" corresponding to original "Invoice"
+        from each "Invoice" from invoiceList*/
+        for (Invoice invoice:invoiceList) {
+            InvoiceViewModel ivm = buildInvoiceViewModel(invoice);
+            invoiceViewModels.add(ivm);
+        }
+
+        return invoiceViewModels;
+    }
 
     //Customer API
-
     public Customer saveCustomer(Customer customer) {
         return customerDao.addACustomer(customer);
     }
-
     public Customer findCustomer (int customerId) {
         return customerDao.getACustomer(customerId);
     }
-
     public List<Customer> findAllCustomers () {
         return customerDao.getAllCustomers();
     }
-
     public void updateCustomer(Customer customer) {
         customerDao.updateCustomer(customer);
-
     }
-
     public void removeCustomer(int customerId) {
         customerDao.deleteACustomer(customerId);
     }
-
 
     //Item API
     public Item saveItem(Item item) {
@@ -78,16 +98,14 @@ public class ServiceLayer {
     public void removeItem(int itemId) {
         itemDao.deleteItem(itemId);
     }
-    //Invoice API
 
+    //Invoice API
     public Invoice addInvoice (Invoice invoice) {
         return invoiceDao.addInvoice(invoice);
     }
-
     public void updateInvoice (Invoice invoice) {
         invoiceDao.updateInvoice(invoice);
     }
-
     public void deleteInvoice (int id) {
         invoiceDao.deleteInvoice(id);
     }
@@ -100,7 +118,6 @@ public class ServiceLayer {
     public Invoice getInvoice (int id) {
         return invoiceDao.getInvoice(id);
     }
-
 
     //InvoiceItemAPI
     public InvoiceItem saveInvoiceItem(InvoiceItem invoiceItem) {

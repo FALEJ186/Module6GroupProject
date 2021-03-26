@@ -7,6 +7,7 @@ import com.company.U1M6GroupProject.dao.ItemDao;
 import com.company.U1M6GroupProject.model.Customer;
 import com.company.U1M6GroupProject.model.Invoice;
 import com.company.U1M6GroupProject.model.InvoiceItem;
+import com.company.U1M6GroupProject.model.Item;
 import com.company.U1M6GroupProject.viewmodel.InvoiceItemViewModel;
 import com.company.U1M6GroupProject.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +39,47 @@ public class ServiceLayer {
 
 
     //Item API
+    public Item saveItem(Item item) {
+        return itemDao.addItem(item);
+    }
 
+    public Item findItem(int itemId) {
+        return itemDao.getItem(itemId);
+    }
+
+    public List<Item> findAllItems() {
+        return itemDao.getAllItems();
+    }
+
+    public void updateItem(Item item) {
+        itemDao.updateItem(item);
+    }
+
+    public void removeItem(int itemId) {
+        itemDao.deleteItem(itemId);
+    }
     //Invoice API
 
     //InvoiceItemAPI
+    public InvoiceItem saveInvoiceItem(InvoiceItem invoiceItem) {
+        return invoiceItemDao.addInvoiceItem(invoiceItem);
+    }
 
+    public InvoiceItem findInvoiceItem(int invoiceItemId) {
+        return invoiceItemDao.getInvoiceItem(invoiceItemId);
+    }
+
+    public List<InvoiceItem> findAllInvoiceItems() {
+        return invoiceItemDao.getAllInvoiceItems();
+    }
+
+    public void updateInvoiceItem(InvoiceItem invoiceItem) {
+        invoiceItemDao.updateInvoiceItem(invoiceItem);
+    }
+
+    public void removeInvoiceItem(int invoiceItemId) {
+        invoiceItemDao.deleteInvoiceItem(invoiceItemId);
+    }
 
     //Helper Method
     private InvoiceViewModel buildInvoiceViewModel(Invoice invoice) {

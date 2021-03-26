@@ -16,7 +16,7 @@ public class InvoiceViewModel {
     private LocalDate pickupDate;
     private LocalDate returnDate;
     private BigDecimal lateFee;
-    private List<InvoiceItem> invoiceItems = new ArrayList<>();
+    private List<InvoiceItemViewModel> invoiceItemViewModels;
 
     public int getId() {
         return id;
@@ -66,12 +66,12 @@ public class InvoiceViewModel {
         this.lateFee = lateFee;
     }
 
-    public List<InvoiceItem> getInvoiceItems() {
-        return invoiceItems;
+    public List<InvoiceItemViewModel> getInvoiceItemViewModels() {
+        return invoiceItemViewModels;
     }
 
-    public void setInvoiceItems(List<InvoiceItem> invoiceItems) {
-        this.invoiceItems = invoiceItems;
+    public void setInvoiceItemViewModels(List<InvoiceItemViewModel> invoiceItemViewModels) {
+        this.invoiceItemViewModels = invoiceItemViewModels;
     }
 
     @Override
@@ -79,12 +79,12 @@ public class InvoiceViewModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         InvoiceViewModel that = (InvoiceViewModel) o;
-        return id == that.id && Objects.equals(customer, that.customer) && Objects.equals(orderDate, that.orderDate) && Objects.equals(pickupDate, that.pickupDate) && Objects.equals(returnDate, that.returnDate) && Objects.equals(lateFee, that.lateFee) && Objects.equals(invoiceItems, that.invoiceItems);
+        return id == that.id && Objects.equals(customer, that.customer) && Objects.equals(orderDate, that.orderDate) && Objects.equals(pickupDate, that.pickupDate) && Objects.equals(returnDate, that.returnDate) && Objects.equals(lateFee, that.lateFee) && Objects.equals(invoiceItemViewModels, that.invoiceItemViewModels);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, customer, orderDate, pickupDate, returnDate, lateFee, invoiceItems);
+        return Objects.hash(id, customer, orderDate, pickupDate, returnDate, lateFee, invoiceItemViewModels);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class InvoiceViewModel {
                 ", pickupDate=" + pickupDate +
                 ", returnDate=" + returnDate +
                 ", lateFee=" + lateFee +
-                ", invoiceItems=" + invoiceItems +
+                ", invoiceItemViewModels=" + invoiceItemViewModels +
                 '}';
     }
 }

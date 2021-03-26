@@ -12,6 +12,8 @@ import com.company.U1M6GroupProject.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +43,6 @@ public class ServiceLayer {
         //Initializes List that contains "InvoiceItemViewModel"
         List<InvoiceItemViewModel> finalInvoiceItemViewModelList = new ArrayList<>();
 
-
         /* Takes all "InvoiceItems" from "initialInvoiceItemList" and sets it to a
         "InvoiceItemViewModel" */
         for (InvoiceItem invoiceItem : initialInvoiceItemList) {
@@ -58,5 +59,15 @@ public class ServiceLayer {
             finalInvoiceItemViewModelList.add(invoiceItemViewModel);
         }
 
+        InvoiceViewModel ivm = new InvoiceViewModel();
+        ivm.setId(invoice.getId());
+        ivm.setCustomer(customer);
+        ivm.setOrderDate(invoice.getOrderDate());
+        ivm.setPickupDate(invoice.getPickupDate());
+        ivm.setReturnDate(invoice.getReturnDate());
+        ivm.setLateFee(invoice.getLateFee());
+        ivm.setInvoiceItemViewModels(finalInvoiceItemViewModelList);
+
+        return ivm;
     }
 }

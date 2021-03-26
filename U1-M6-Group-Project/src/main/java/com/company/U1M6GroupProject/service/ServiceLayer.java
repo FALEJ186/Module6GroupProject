@@ -41,6 +41,28 @@ public class ServiceLayer {
 
     //Invoice API
 
+    public Invoice addInvoice (Invoice invoice) {
+        return invoiceDao.addInvoice(invoice);
+    }
+
+    public void updateInvoice (Invoice invoice) {
+        invoiceDao.updateInvoice(invoice);
+    }
+
+    public void deleteInvoice (int id) {
+        invoiceDao.deleteInvoice(id);
+    }
+    public List <Invoice> findInvoiceByCustomerId (int customerId) {
+        return invoiceDao.findInvoiceByCustomerId(customerId);
+    }
+    public List <Invoice> getAllInvoices() {
+        return invoiceDao.getAllInvoices();
+    }
+    public Invoice getInvoice (int id) {
+        return invoiceDao.getInvoice(id);
+    }
+
+
     //InvoiceItemAPI
 
 

@@ -39,8 +39,8 @@ public class ServiceLayer {
         return customerDao.addACustomer(customer);
     }
 
-    public Customer findCustomer (int id) {
-        return customerDao.getACustomer(id);
+    public Customer findCustomer (int customerId) {
+        return customerDao.getACustomer(customerId);
     }
 
     public List<Customer> findAllCustomers () {
@@ -52,10 +52,9 @@ public class ServiceLayer {
 
     }
 
-    public void removeCustomer(int id) {
-        customerDao.deleteACustomer(id);
+    public void removeCustomer(int customerId) {
+        customerDao.deleteACustomer(customerId);
     }
-
 
 
     //Item API

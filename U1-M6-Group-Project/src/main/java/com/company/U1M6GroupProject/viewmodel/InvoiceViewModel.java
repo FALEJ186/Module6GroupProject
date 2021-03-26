@@ -2,6 +2,11 @@ package com.company.U1M6GroupProject.viewmodel;
 
 import com.company.U1M6GroupProject.model.Customer;
 import com.company.U1M6GroupProject.model.InvoiceItem;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,8 +17,17 @@ import java.util.Objects;
 public class InvoiceViewModel {
     private int id;
     private Customer customer;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate orderDate;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate pickupDate;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate returnDate;
     private BigDecimal lateFee;
     private List<InvoiceItemViewModel> invoiceItemViewModels;

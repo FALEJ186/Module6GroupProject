@@ -34,7 +34,7 @@ public class CustomerController {
 
     @RequestMapping (value = "/customer", method = RequestMethod.POST)
     @ResponseStatus (value = HttpStatus.CREATED)
-    public Customer createACustomer(@RequestBody Customer customer) {
+    public Customer createACustomer( @RequestBody Customer customer) {
         return serviceLayer.saveCustomer(customer);
 
     }

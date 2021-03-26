@@ -66,18 +66,8 @@ public class ServiceLayer {
         List<InvoiceItem> invoiceItemList = invoiceItemDao.getInvoicesItemByInvoiceId(invoiceViewModel.getId());
         //initializes array "invoiceItemViewModelsToAdd" which will be added to the return viewModel.
         List<InvoiceItemViewModel> invoiceItemViewModelsToAdd = new ArrayList<>();
-        for (InvoiceItem invoiceItem:invoiceItemList) {
-            //Initializes new "InvoiceItemViewModel" to add into "invoiceItemViewModelsToAdd"
-            InvoiceItemViewModel invoiceItemViewModel = new InvoiceItemViewModel();
-            //Most of these sets are grabbed directly from the original "InvoiceItem"
-            invoiceItemViewModel.setId(invoiceItem.getId());
-            invoiceItemViewModel.setInvoiceId(invoiceItem.getInvoiceId());
-            //This is the only difference in which we grab the "Item" object using the item id as reference.
-            invoiceItemViewModel.setItem(itemDao.getItem(invoiceItem.getItemId()));
-            invoiceItemViewModel.setQuantity(invoiceItem.getQuantity());
-            invoiceItemViewModel.setUnitRate(invoiceItem.getUnitRate());
-            invoiceItemViewModel.setDiscount(invoiceItem.getDiscount());
-            invoiceItemViewModelsToAdd.add(invoiceItemViewModel);
+        for (InvoiceItem invoiceItem : invoiceItemList) {
+            invoiceItemViewModelsToAdd.add(buildInvoiceItemViewModel(invoiceItem));
         }
         //sets the invoiceViewModel List<InvoiceItemViewModel> to the array set earlier
         invoiceViewModel.setInvoiceItemViewModels(invoiceItemViewModelsToAdd);
@@ -149,19 +139,10 @@ public class ServiceLayer {
         List<InvoiceItem> invoiceItemList = invoiceItemDao.getInvoicesItemByInvoiceId(viewModel.getId());
         //initializes array "invoiceItemViewModelsToAdd" which will be added to the return viewModel.
         List<InvoiceItemViewModel> invoiceItemViewModelsToAdd = new ArrayList<>();
-        for (InvoiceItem invoiceItem:invoiceItemList) {
-            //Initializes new "InvoiceItemViewModel" to add into "invoiceItemViewModelsToAdd"
-            InvoiceItemViewModel invoiceItemViewModel = new InvoiceItemViewModel();
-            //Most of these sets are grabbed directly from the original "InvoiceItem"
-            invoiceItemViewModel.setId(invoiceItem.getId());
-            invoiceItemViewModel.setInvoiceId(invoiceItem.getInvoiceId());
-            //This is the only difference in which we grab the "Item" object using the item id as reference.
-            invoiceItemViewModel.setItem(itemDao.getItem(invoiceItem.getItemId()));
-            invoiceItemViewModel.setQuantity(invoiceItem.getQuantity());
-            invoiceItemViewModel.setUnitRate(invoiceItem.getUnitRate());
-            invoiceItemViewModel.setDiscount(invoiceItem.getDiscount());
-            invoiceItemViewModelsToAdd.add(invoiceItemViewModel);
+        for (InvoiceItem invoiceItem : invoiceItemList) {
+            invoiceItemViewModelsToAdd.add(buildInvoiceItemViewModel(invoiceItem));
         }
+
         //sets the invoiceViewModel List<InvoiceItemViewModel> to the array set earlier
         viewModel.setInvoiceItemViewModels(invoiceItemViewModelsToAdd);
     }
@@ -253,6 +234,7 @@ public class ServiceLayer {
     private InvoiceViewModel buildInvoiceViewModel(Invoice invoice) {
         Customer customer = customerDao.getACustomer(invoice.getCustomerId());
 
+
         //Grabs all "InvoiceItem" that matches up with invoice id
         List<InvoiceItem> initialInvoiceItemList = invoiceItemDao.getInvoicesItemByInvoiceId(invoice.getId());
 
@@ -262,17 +244,7 @@ public class ServiceLayer {
         /* Takes all "InvoiceItems" from "initialInvoiceItemList" and sets it to a
         "InvoiceItemViewModel" */
         for (InvoiceItem invoiceItem : initialInvoiceItemList) {
-            //Initializes new "InvoiceItemViewModel" to add into "finalInvoiceItemViewModelList"
-            InvoiceItemViewModel invoiceItemViewModel = new InvoiceItemViewModel();
-            //Most of these sets are grabbed directly from the original "InvoiceItem"
-            invoiceItemViewModel.setId(invoiceItem.getId());
-            invoiceItemViewModel.setInvoiceId(invoiceItem.getInvoiceId());
-            //This is the only difference in which we grab the "Item" object using the item id as reference.
-            invoiceItemViewModel.setItem(itemDao.getItem(invoiceItem.getItemId()));
-            invoiceItemViewModel.setQuantity(invoiceItem.getQuantity());
-            invoiceItemViewModel.setUnitRate(invoiceItem.getUnitRate());
-            invoiceItemViewModel.setDiscount(invoiceItem.getDiscount());
-            finalInvoiceItemViewModelList.add(invoiceItemViewModel);
+            finalInvoiceItemViewModelList.add(buildInvoiceItemViewModel(invoiceItem));
         }
 
         InvoiceViewModel ivm = new InvoiceViewModel();
@@ -299,5 +271,4 @@ public class ServiceLayer {
 
         return iivm;
     }
-
 }

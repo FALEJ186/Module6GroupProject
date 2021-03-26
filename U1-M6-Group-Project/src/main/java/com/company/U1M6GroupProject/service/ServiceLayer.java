@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -285,4 +286,18 @@ public class ServiceLayer {
 
         return ivm;
     }
+    private InvoiceItemViewModel buildInvoiceItemViewModel(InvoiceItem invoiceItem) {
+        Item item = itemDao.getItem(invoiceItem.getItemId());
+
+        InvoiceItemViewModel iivm = new InvoiceItemViewModel();
+        iivm.setId(invoiceItem.getId());
+        iivm.setInvoiceId(invoiceItem.getInvoiceId());
+        iivm.setItem(item);
+        iivm.setQuantity(invoiceItem.getQuantity());
+        iivm.setUnitRate(invoiceItem.getUnitRate());
+        iivm.setDiscount(invoiceItem.getDiscount());
+
+        return iivm;
+    }
+
 }

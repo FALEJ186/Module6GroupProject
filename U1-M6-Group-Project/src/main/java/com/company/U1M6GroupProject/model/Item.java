@@ -1,12 +1,15 @@
 package com.company.U1M6GroupProject.model;
 
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Item {
 
     private int id;
+    @NotEmpty(message = "You must supply a value for name.")
     private String name;
+    @NotEmpty(message = "You must supply a value for description.")
     private String description;
     private BigDecimal dailyRate;
 

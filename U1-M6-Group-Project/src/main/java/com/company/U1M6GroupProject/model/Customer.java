@@ -1,14 +1,20 @@
 package com.company.U1M6GroupProject.model;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 public class Customer {
 
     private int id;
+    @NotEmpty(message = "You must supply a value for first name.")
     private String firstName;
+    @NotEmpty(message = "You must supply a value for last name.")
     private String lastName;
+    @NotEmpty(message = "You must supply a value for email.")
     private String email;
+    @NotEmpty(message = "You must supply a value for company.")
     private String company;
+    @NotEmpty(message = "You must supply a value for phone.")
     private String phone;
 
     public int getId() {

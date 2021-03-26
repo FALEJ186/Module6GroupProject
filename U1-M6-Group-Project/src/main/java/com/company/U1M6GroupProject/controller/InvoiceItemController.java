@@ -39,7 +39,7 @@ public class InvoiceItemController {
 
     }
 
-    @RequestMapping (value = "/invioceitem/{id}", method = RequestMethod.PUT)
+    @RequestMapping (value = "/invoiceitem/{id}", method = RequestMethod.PUT)
     @ResponseStatus (value = HttpStatus.OK)
     public void updateAInvoiceItem(@PathVariable int id, @RequestBody InvoiceItem invoiceItem) {
         serviceLayer.updateInvoiceItem(invoiceItem);

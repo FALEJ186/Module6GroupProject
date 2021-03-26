@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,12 +30,13 @@ public class CustomerController {
     @RequestMapping(value ="/customer/{id}", method = RequestMethod.GET)
     @ResponseStatus (HttpStatus.OK)
     public Customer getCustomerById (@PathVariable int id) {
+
         return serviceLayer.findCustomer(id);
     }
 
     @RequestMapping (value = "/customer", method = RequestMethod.POST)
     @ResponseStatus (value = HttpStatus.CREATED)
-    public Customer createACustomer( @RequestBody Customer customer) {
+    public Customer createACustomer(@Valid @RequestBody Customer customer)  {
         return serviceLayer.saveCustomer(customer);
 
     }

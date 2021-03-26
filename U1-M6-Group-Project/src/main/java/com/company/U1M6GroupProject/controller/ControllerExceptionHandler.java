@@ -20,7 +20,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(value = {IllegalArgumentException.class}) //what exception im handling. anytime this exception shows up this will run
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity<ErrorResponse> outOfRangeException(IllegalArgumentException e) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(),e.getMessage());
+        ErrorResponse error = new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(),"Illegal argument detected");
         ResponseEntity<ErrorResponse> responseEntity = new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
         return responseEntity;
     }

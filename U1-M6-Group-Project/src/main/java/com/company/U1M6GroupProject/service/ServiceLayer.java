@@ -33,6 +33,17 @@ public class ServiceLayer {
         this.invoiceDao = invoiceDao;
     }
 
+    //Customer API
+
+
+
+    //Item API
+
+    //Invoice API
+
+    //InvoiceItemAPI
+
+
     //Helper Method
     private InvoiceViewModel buildInvoiceViewModel(Invoice invoice) {
         Customer customer = customerDao.getACustomer(invoice.getCustomerId());

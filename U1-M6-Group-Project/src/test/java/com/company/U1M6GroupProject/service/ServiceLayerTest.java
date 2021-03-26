@@ -2,12 +2,14 @@ package com.company.U1M6GroupProject.service;
 
 import com.company.U1M6GroupProject.dao.*;
 import com.company.U1M6GroupProject.model.Customer;
+import com.company.U1M6GroupProject.model.Invoice;
 import com.company.U1M6GroupProject.model.InvoiceItem;
 import com.company.U1M6GroupProject.model.Item;
 import org.junit.Before;
 import org.springframework.data.relational.core.sql.In;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +70,35 @@ public class ServiceLayerTest {
     }
 
     private void setUpInvoiceDaoMock() {
+        InvoiceDao invoiceDaoMock = mock(InvoiceDaoJdbcTemplateImpl.class);
+
+        Invoice invoice = new Invoice();
+        invoice.setId(5);
+        invoice.setCustomerId(45);
+        invoice.setLateFee(new BigDecimal("10.00"));
+        invoice.setOrderDate(LocalDate.of(2010,5,10));
+        invoice.setPickupDate(LocalDate.of(2010,6,20));
+        invoice.setReturnDate(LocalDate.of(2010,6,30));
+
+        Invoice invoice2 = new Invoice();
+
+        invoice2.setCustomerId(45);
+        invoice2.setLateFee(new BigDecimal("10.00"));
+        invoice2.setOrderDate(LocalDate.of(2010,5,10));
+        invoice2.setPickupDate(LocalDate.of(2010,6,20));
+        invoice2.setReturnDate(LocalDate.of(2010,6,30));
+
+        List<Invoice> invoiceList = new ArrayList<>();
+        invoiceList.add(invoice);
+
+        doReturn(invoiceList).when(invoiceDaoMock).getAllInvoices();
+
+        doReturn(invoice).when(invoiceDaoMock).addInvoice(invoice2);
+
+        doReturn(invoice).when(invoiceDaoMock).getInvoice(5);
+
+        this.invoiceDao = invoiceDaoMock;
+
 
     }
 
@@ -103,7 +134,7 @@ public class ServiceLayerTest {
         InvoiceItemDao invoiceItemDaoMock = mock(InvoiceItemDaoJdbcTemplateImpl.class);
 
         InvoiceItem invoiceItem = new InvoiceItem();
-        invoiceItem.setId(1);
+        invoiceItem.setId(20);
         invoiceItem.setInvoiceId(5);
         invoiceItem.setItemId(10);
         invoiceItem.setUnitRate(new BigDecimal("5.00"));
@@ -126,7 +157,7 @@ public class ServiceLayerTest {
 
         doReturn(invoiceItem).when(invoiceItemDaoMock).addInvoiceItem(invoiceItem2);
 
-        doReturn(invoiceItem).when(invoiceItemDaoMock).getInvoiceItem(1);
+        doReturn(invoiceItem).when(invoiceItemDaoMock).getInvoiceItem(20);
 
         doReturn(invoiceItem).when(invoiceItemDaoMock).getInvoicesItemByInvoiceId(5);
 

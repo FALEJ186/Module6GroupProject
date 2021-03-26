@@ -21,7 +21,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(value = {IllegalArgumentException.class}) //what exception im handling. anytime this exception shows up this will run
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity<ErrorResponse> outOfRangeException(IllegalArgumentException e) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(),"Illegal argument detected");
+        ErrorResponse error = new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(),"Illegal argument detected", 422);
         ResponseEntity<ErrorResponse> responseEntity = new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
         return responseEntity;
     }
@@ -29,7 +29,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(value = {HttpMessageNotReadableException.class}) //what exception im handling. anytime this exception shows up this will run
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity<ErrorResponse> messageNotReadable(HttpMessageNotReadableException e) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(),"Illegal argument detected");
+        ErrorResponse error = new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(),"Illegal argument detected", 422);
         ResponseEntity<ErrorResponse> responseEntity = new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
         return responseEntity;
     }
@@ -37,7 +37,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(value = {NullPointerException.class})
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity<ErrorResponse> handleNullPointerException(NullPointerException e) {  //inside the brackets is called the generic?
-        ErrorResponse error = new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(),"Null pointer detected");
+        ErrorResponse error = new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(),"Null pointer detected", 422);
         ResponseEntity<ErrorResponse> responseEntity = new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
         return responseEntity;
     }

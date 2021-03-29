@@ -1,0 +1,669 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: 'http://localhost:8080'
+    description: Generated server url
+paths:
+  '/item/{id}':
+    put:
+      tags:
+        - item-controller
+      operationId: updateAItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - item-controller
+      operationId: deleteAItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+  '/invoiceitem/{id}':
+    get:
+      tags:
+        - invoice-item-controller
+      operationId: getInvoiceItemById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvoiceItemViewModel'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - invoice-item-controller
+      operationId: updateAInvoiceItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItemViewModel'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - invoice-item-controller
+      operationId: deleteAInvoiceItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+  '/invoice/{id}':
+    get:
+      tags:
+        - invoice-controller
+      operationId: findInvoice
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvoiceViewModel'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - invoice-controller
+      operationId: updateInvoice
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceViewModel'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - invoice-controller
+      operationId: removeInvoice
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+  '/customer/{id}':
+    get:
+      tags:
+        - customer-controller
+      operationId: getCustomerById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - customer-controller
+      operationId: updateACustomer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - customer-controller
+      operationId: deleteACustomer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+  /item:
+    get:
+      tags:
+        - item-controller
+      operationId: getAllItems
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - item-controller
+      operationId: postANewItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Item'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+  /invoiceitem:
+    get:
+      tags:
+        - invoice-item-controller
+      operationId: getAllInvoiceItems
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoiceItemViewModel'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - invoice-item-controller
+      operationId: createAInvoiceItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItemViewModel'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvoiceItemViewModel'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+  /invoice:
+    get:
+      tags:
+        - invoice-controller
+      operationId: FindAllInvoices
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoiceViewModel'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - invoice-controller
+      operationId: saveInvoice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceViewModel'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvoiceViewModel'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+  /customer:
+    get:
+      tags:
+        - customer-controller
+      operationId: getAllCustomers
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - customer-controller
+      operationId: createACustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+  '/items/{id}':
+    get:
+      tags:
+        - item-controller
+      operationId: getItemById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Item'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+  '/invoice/customer/{id}':
+    get:
+      tags:
+        - invoice-controller
+      operationId: getInvoiceByCustomerId
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoiceViewModel'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        errorMessage:
+          type: string
+        status:
+          type: integer
+          format: int32
+        errorCode:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    Item:
+      required:
+        - description
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        description:
+          type: string
+        dailyRate:
+          type: number
+    InvoiceItemViewModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        invoiceId:
+          type: integer
+          format: int32
+        item:
+          $ref: '#/components/schemas/Item'
+        quantity:
+          type: integer
+          format: int32
+        unitRate:
+          type: number
+        discount:
+          type: number
+    Customer:
+      required:
+        - company
+        - email
+        - firstName
+        - lastName
+        - phone
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        company:
+          type: string
+        phone:
+          type: string
+    InvoiceViewModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        customer:
+          $ref: '#/components/schemas/Customer'
+        orderDate:
+          type: string
+          format: date
+        pickupDate:
+          type: string
+          format: date
+        returnDate:
+          type: string
+          format: date
+        lateFee:
+          type: number
+        invoiceItemViewModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItemViewModel'

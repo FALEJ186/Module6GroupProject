@@ -379,6 +379,63 @@ public class ServiceLayerTest {
         assertEquals(testInvoiceList,resultOfSearchingByCustomerId);
     }
 
+    @Test
+    public void shouldFindAllInvoices() {
+        InvoiceViewModel expectedInvoiceViewModel = new InvoiceViewModel();
+        expectedInvoiceViewModel.setId(5);
+
+        Customer customer2 = new Customer();
+        customer2.setId(45);
+        customer2.setFirstName("Bob");
+        customer2.setLastName("Jones");
+        customer2.setEmail("abc@gmail.com");
+        customer2.setPhone("555-5555");
+        customer2.setCompany("Cognizant");
+        expectedInvoiceViewModel.setCustomer(customer2);
+
+        Item item2 = new Item();
+        item2.setId(10);
+        item2.setDailyRate(new BigDecimal("5.99"));
+        item2.setDescription("movie");
+        item2.setName("Toy Story");
+
+        InvoiceItem invoiceItem2 = new InvoiceItem();
+        invoiceItem2.setId(20);
+        invoiceItem2.setInvoiceId(5);
+        invoiceItem2.setItemId(10);
+        invoiceItem2.setUnitRate(new BigDecimal("5.00"));
+        invoiceItem2.setQuantity(6);
+        invoiceItem2.setDiscount(new BigDecimal("2.50"));
+
+        expectedInvoiceViewModel.setOrderDate(LocalDate.of(2010,5,10));
+        expectedInvoiceViewModel.setPickupDate(LocalDate.of(2010,6,20));
+        expectedInvoiceViewModel.setReturnDate(LocalDate.of(2010,6,30));
+        expectedInvoiceViewModel.setLateFee(new BigDecimal("10.00"));
+
+        InvoiceItemViewModel iivm2 = new InvoiceItemViewModel();
+        iivm2.setId(invoiceItem2.getId());
+        iivm2.setInvoiceId(invoiceItem2.getInvoiceId());
+        iivm2.setItem(item2);
+        iivm2.setQuantity(invoiceItem2.getQuantity());
+        iivm2.setUnitRate(invoiceItem2.getUnitRate());
+        iivm2.setDiscount(invoiceItem2.getDiscount());
+
+        List<InvoiceItemViewModel> invoiceItemViewModelList2 = new ArrayList<>();
+        invoiceItemViewModelList2.add(iivm2);
+
+        expectedInvoiceViewModel.setInvoiceItemViewModels(invoiceItemViewModelList2);
+
+        List <InvoiceViewModel> list = new ArrayList<>();
+
+        list.add(expectedInvoiceViewModel);
+
+        List <InvoiceViewModel> resultOfRetrievingAllInvoices = service.findAllInvoices();
+
+        assertEquals(1, resultOfRetrievingAllInvoices.size());
+        assertEquals(list, resultOfRetrievingAllInvoices);
+
+
+    }
 
     @Test
 

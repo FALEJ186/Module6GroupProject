@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class ServiceLayerTest {
 
@@ -61,6 +60,8 @@ public class ServiceLayerTest {
         testing.add(invoice);
 
         doReturn(testing).when(invoiceDaoMock).findInvoiceByCustomerId(45);
+
+      //  doNothing().when(invoiceDaoMock).deleteInvoice(5);
 
 
         this.invoiceDao = invoiceDaoMock;
@@ -439,7 +440,7 @@ public class ServiceLayerTest {
 
     @Test
 
-    public void shouldGetAllInvoicesByInvoiceId() {
+    public void shouldGetInvoiceByInvoiceId() {
 
         InvoiceViewModel expectedInvoiceViewModel = new InvoiceViewModel();
 
@@ -494,5 +495,73 @@ public class ServiceLayerTest {
         assertEquals(expectedInvoiceViewModel,resultofRetrievingInvoice);
 
     }
+
+    @Test
+
+    public void shouldDeleteInvoice() {
+
+        InvoiceViewModel expectedInvoiceViewModel = new InvoiceViewModel();
+
+        expectedInvoiceViewModel.setId(5);
+
+        Customer customer = new Customer();
+        customer.setId(45);
+        customer.setFirstName("Bob");
+        customer.setLastName("Jones");
+        customer.setEmail("abc@gmail.com");
+        customer.setPhone("555-5555");
+        customer.setCompany("Cognizant");
+        expectedInvoiceViewModel.setCustomer(customer);
+
+
+        Item item = new Item();
+        item.setId(10);
+        item.setDailyRate(new BigDecimal("5.99"));
+        item.setDescription("movie");
+        item.setName("Toy Story");
+
+
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setId(20);
+        invoiceItem.setInvoiceId(5);
+        invoiceItem.setItemId(10);
+        invoiceItem.setUnitRate(new BigDecimal("5.00"));
+        invoiceItem.setQuantity(6);
+        invoiceItem.setDiscount(new BigDecimal("2.50"));
+
+        expectedInvoiceViewModel.setOrderDate(LocalDate.of(2010, 5, 10));
+        expectedInvoiceViewModel.setPickupDate(LocalDate.of(2010, 6, 20));
+        expectedInvoiceViewModel.setReturnDate(LocalDate.of(2010, 6, 30));
+        expectedInvoiceViewModel.setLateFee(new BigDecimal("10.00"));
+
+        InvoiceItemViewModel iivm = new InvoiceItemViewModel();
+        iivm.setId(invoiceItem.getId());
+        iivm.setInvoiceId(invoiceItem.getInvoiceId());
+        iivm.setItem(item);
+        iivm.setQuantity(invoiceItem.getQuantity());
+        iivm.setUnitRate(invoiceItem.getUnitRate());
+        iivm.setDiscount(invoiceItem.getDiscount());
+
+        List<InvoiceItemViewModel> invoiceItemViewModelList = new ArrayList<>();
+
+        invoiceItemViewModelList.add(iivm);
+
+        expectedInvoiceViewModel.setInvoiceItemViewModels(invoiceItemViewModelList);
+
+     //   service.removeInvoiceItem(20);
+
+        service.removeInvoice(5);
+
+        service.removeInvoice(expectedInvoiceViewModel.getId());
+
+
+        InvoiceViewModel result = service.findInvoice(expectedInvoiceViewModel.getId());
+
+
+
+        assertNull(result);
+
+    }
+
 
 }

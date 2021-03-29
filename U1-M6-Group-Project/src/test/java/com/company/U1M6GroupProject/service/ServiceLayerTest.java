@@ -177,7 +177,7 @@ public class ServiceLayerTest {
     public void shouldSaveInvoice() {
         InvoiceViewModel expectedInvoiceViewModel = new InvoiceViewModel();
 
-        expectedInvoiceViewModel.setId(1);
+        expectedInvoiceViewModel.setId(5);
 
         Customer customer = new Customer();
         customer.setId(45);
@@ -231,7 +231,7 @@ public class ServiceLayerTest {
         customer2.setEmail("abc@gmail.com");
         customer2.setPhone("555-5555");
         customer2.setCompany("Cognizant");
-        expectedInvoiceViewModel.setCustomer(customer2);
+        inputInvoiceViewModel.setCustomer(customer2);
 
         Item item2 = new Item();
         item2.setId(10);
@@ -270,9 +270,6 @@ public class ServiceLayerTest {
         InvoiceViewModel resultOfSavingInput = service.saveInvoice(inputInvoiceViewModel);
 
         assertEquals(expectedInvoiceViewModel,resultOfSavingInput);
-
-
-
     }
 
 

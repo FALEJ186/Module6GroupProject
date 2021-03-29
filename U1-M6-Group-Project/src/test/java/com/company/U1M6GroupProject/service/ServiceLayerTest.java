@@ -404,16 +404,6 @@ public class ServiceLayerTest {
         item.setDescription("movie");
         item.setName("Toy Story");
 
-        Invoice invoice = new Invoice();
-        invoice.setId(5);
-        invoice.setCustomerId(45);
-        invoice.setLateFee(new BigDecimal("10.00"));
-        invoice.setOrderDate(LocalDate.of(2010,5,10));
-        invoice.setPickupDate(LocalDate.of(2010,6,20));
-        invoice.setReturnDate(LocalDate.of(2010,6,30));
-
-        List<Invoice>invoiceList = new ArrayList<>();
-        invoiceList.add(invoice);
 
         InvoiceItem invoiceItem = new InvoiceItem();
         invoiceItem.setId(20);

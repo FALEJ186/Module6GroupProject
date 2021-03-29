@@ -5,7 +5,10 @@ import com.company.U1M6GroupProject.model.Customer;
 import com.company.U1M6GroupProject.model.Invoice;
 import com.company.U1M6GroupProject.model.InvoiceItem;
 import com.company.U1M6GroupProject.model.Item;
+import com.company.U1M6GroupProject.viewmodel.InvoiceItemViewModel;
+import com.company.U1M6GroupProject.viewmodel.InvoiceViewModel;
 import org.junit.Before;
+import org.junit.Test;
 import org.springframework.data.relational.core.sql.In;
 
 import java.math.BigDecimal;
@@ -25,16 +28,6 @@ public class ServiceLayerTest {
     InvoiceItemDao invoiceItemDao;
     ItemDao itemDao;
 
-    @Before
-    public void setUp () throws Exception {
-        setUpCustomerDaoMock();
-        setUpInvoiceDaoMock();
-        setUpItemDaoMock();
-        setUpInvoiceItemDaoMock();
-
-        service = new ServiceLayer(customerDao,itemDao, invoiceItemDao, invoiceDao);
-
-    }
 
     private void setUpInvoiceDaoMock() {
         InvoiceDao invoiceDaoMock = mock(InvoiceDaoJdbcTemplateImpl.class);
@@ -161,12 +154,127 @@ public class ServiceLayerTest {
 
         doReturn(invoiceItem).when(invoiceItemDaoMock).getInvoiceItem(20);
 
-        doReturn(invoiceItem).when(invoiceItemDaoMock).getInvoicesItemByInvoiceId(5);
+        doReturn(invoiceItemList).when(invoiceItemDaoMock).getInvoicesItemByInvoiceId(5);
 
         this.invoiceItemDao = invoiceItemDaoMock;
 
 
     }
+
+    @Before
+    public void setUp () throws Exception {
+        setUpCustomerDaoMock();
+        setUpInvoiceDaoMock();
+        setUpItemDaoMock();
+        setUpInvoiceItemDaoMock();
+
+        service = new ServiceLayer(customerDao,itemDao, invoiceItemDao, invoiceDao);
+
+    }
+
+
+    @Test
+    public void shouldSaveInvoice() {
+        InvoiceViewModel expectedInvoiceViewModel = new InvoiceViewModel();
+
+        expectedInvoiceViewModel.setId(1);
+
+        Customer customer = new Customer();
+        customer.setId(45);
+        customer.setFirstName("Bob");
+        customer.setLastName("Jones");
+        customer.setEmail("abc@gmail.com");
+        customer.setPhone("555-5555");
+        customer.setCompany("Cognizant");
+        expectedInvoiceViewModel.setCustomer(customer);
+
+        Item item = new Item();
+        item.setId(10);
+        item.setDailyRate(new BigDecimal("5.99"));
+        item.setDescription("movie");
+        item.setName("Toy Story");
+
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setId(20);
+        invoiceItem.setInvoiceId(5);
+        invoiceItem.setItemId(10);
+        invoiceItem.setUnitRate(new BigDecimal("5.00"));
+        invoiceItem.setQuantity(6);
+        invoiceItem.setDiscount(new BigDecimal("2.50"));
+
+        expectedInvoiceViewModel.setOrderDate(LocalDate.of(2010,5,10));
+        expectedInvoiceViewModel.setPickupDate(LocalDate.of(2010,6,20));
+        expectedInvoiceViewModel.setReturnDate(LocalDate.of(2010,6,30));
+        expectedInvoiceViewModel.setLateFee(new BigDecimal("10.00"));
+
+        InvoiceItemViewModel iivm = new InvoiceItemViewModel();
+        iivm.setId(invoiceItem.getId());
+        iivm.setInvoiceId(invoiceItem.getInvoiceId());
+        iivm.setItem(item);
+        iivm.setQuantity(invoiceItem.getQuantity());
+        iivm.setUnitRate(invoiceItem.getUnitRate());
+        iivm.setDiscount(invoiceItem.getDiscount());
+
+        List<InvoiceItemViewModel> invoiceItemViewModelList = new ArrayList<>();
+        invoiceItemViewModelList.add(iivm);
+
+        expectedInvoiceViewModel.setInvoiceItemViewModels(invoiceItemViewModelList);
+
+
+        InvoiceViewModel inputInvoiceViewModel = new InvoiceViewModel();
+
+
+        Customer customer2 = new Customer();
+        customer2.setId(45);
+        customer2.setFirstName("Bob");
+        customer2.setLastName("Jones");
+        customer2.setEmail("abc@gmail.com");
+        customer2.setPhone("555-5555");
+        customer2.setCompany("Cognizant");
+        expectedInvoiceViewModel.setCustomer(customer2);
+
+        Item item2 = new Item();
+        item2.setId(10);
+        item2.setDailyRate(new BigDecimal("5.99"));
+        item2.setDescription("movie");
+        item2.setName("Toy Story");
+
+        InvoiceItem invoiceItem2 = new InvoiceItem();
+        invoiceItem2.setId(20);
+        invoiceItem2.setInvoiceId(5);
+        invoiceItem2.setItemId(10);
+        invoiceItem2.setUnitRate(new BigDecimal("5.00"));
+        invoiceItem2.setQuantity(6);
+        invoiceItem2.setDiscount(new BigDecimal("2.50"));
+
+
+        inputInvoiceViewModel.setOrderDate(LocalDate.of(2010,5,10));
+        inputInvoiceViewModel.setPickupDate(LocalDate.of(2010,6,20));
+        inputInvoiceViewModel.setReturnDate(LocalDate.of(2010,6,30));
+        inputInvoiceViewModel.setLateFee(new BigDecimal("10.00"));
+
+        InvoiceItemViewModel iivm2 = new InvoiceItemViewModel();
+        iivm2.setId(invoiceItem.getId());
+        iivm2.setInvoiceId(invoiceItem.getInvoiceId());
+        iivm2.setItem(item);
+        iivm2.setQuantity(invoiceItem.getQuantity());
+        iivm2.setUnitRate(invoiceItem.getUnitRate());
+        iivm2.setDiscount(invoiceItem.getDiscount());
+
+        List<InvoiceItemViewModel> invoiceItemViewModelList2 = new ArrayList<>();
+        invoiceItemViewModelList2.add(iivm2);
+
+        inputInvoiceViewModel.setInvoiceItemViewModels(invoiceItemViewModelList2);
+
+
+        InvoiceViewModel resultOfSavingInput = service.saveInvoice(inputInvoiceViewModel);
+
+        assertEquals(expectedInvoiceViewModel,resultOfSavingInput);
+
+
+
+    }
+
 
 
 
